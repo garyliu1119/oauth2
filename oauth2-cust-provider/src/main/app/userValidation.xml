@@ -12,22 +12,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
 http://www.mulesoft.org/schema/mule/oauth2-provider http://www.mulesoft.org/schema/mule/oauth2-provider/current/mule-oauth2-provider.xsd
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">  
-   <tls:context name="tls.context.listener" doc:name="TLS Context">    
-      <tls:key-store path="${key.store.path}"
-                     password="${key.store.password}"
-                     keyPassword="${key.store.key.password}"/>  
-   </tls:context>  
-   
-   <http:listener-config name="https.listener"
-                         protocol="HTTPS"
-                         host="0.0.0.0"
-                         port="${https.port}"
-                         doc:name="HTTPs Listener Configuration"
-                         tlsContext-ref="tls.context.listener" connectionIdleTimeout="300000"/>  
-   <http:listener-config name="http.listener"
-                         host="0.0.0.0"
-                         port="${http.port}"
-                         doc:name="HTTPs Listener Configuration" connectionIdleTimeout="300000"/>  
+
    <flow name="validateToken">    
       <http:listener config-ref="https.listener"
                      path="${http.validate.endpoint.path}"

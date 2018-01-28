@@ -44,7 +44,30 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     </ss:authentication-manager>
   </spring:beans>
 
-  <http:request-config name="httpAuthentication" host="${http.authenticate.host}" port="${http.port}" basePath="${http.mock.provider.endpoint}"  doc:name="HTTP Requestor"/>
+   <tls:context name="tls.context.listener" doc:name="TLS Context">    
+      <tls:key-store path="${key.store.path}"
+                     password="${key.store.password}"
+                     keyPassword="${key.store.key.password}"/>  
+   </tls:context>  
+   
+   <http:listener-config name="https.listener"
+                         protocol="HTTPS"
+                         host="0.0.0.0"
+                         port="${https.port}"
+                         doc:name="HTTPs Listener Configuration"
+                         tlsContext-ref="tls.context.listener" connectionIdleTimeout="300000"/>  
+   <http:listener-config name="http.listener"
+                         host="0.0.0.0"
+                         port="${http.port}"
+                         doc:name="HTTPs Listener Configuration" connectionIdleTimeout="300000"/>  
+
+
+  <http:request-config 
+  	name="httpAuthentication" 
+  	host="${http.authenticate.host}" 
+  	port="${http.port}" 
+  	basePath="${http.mock.provider.endpoint}"  
+  	doc:name="HTTP Requestor"/>
 
   <!-- store oauth client-specific info -->
   <api-platform-gw:client-store id="multiple-users-client-store" doc:name="Client Store"/>
